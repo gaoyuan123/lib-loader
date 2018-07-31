@@ -1,0 +1,42 @@
+{
+  "name": "lib-loader",
+  "version": "1.0.0",
+  "description": "a webpack loader to package a lib",
+  "main": "dist/index.js",
+  "author": "showgao <gaoyuanzlz@qq.com>",
+  "license": "MIT",
+  "scripts": {},
+  "keywords": [
+    "webpack",
+    "webpack loader",
+    "webpack lib",
+    "lib-loader"
+  ],
+  "devDependencies": {
+    "webpack": "^2.0.0"
+  },
+  "dependencies": {
+    "loader-utils": "^1.0.2",
+    "schema-utils": "^0.4.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaoyuan123/lib-loader.git"
+  },
+  "files": [
+    "dist/"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/gaoyuan123/lib-loader/issues"
+  },
+  "homepage": "https://github.com/gaoyuan123/lib-loader#readme",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  }
+}

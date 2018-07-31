@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {},
+    "regExp": {},
+    "context": {
+      "type": "string"
+    },
+    "publicPath": {},
+    "outputPath": {},
+    "useRelativePath": {
+      "type": "boolean"
+    },
+    "emitFile": {
+      "type": "boolean"
+    },
+    "target": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}
