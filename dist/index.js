@@ -53,7 +53,7 @@ module.exports.pitch = function pitch(request) {
 
         const assets = compilation.assets;
         const files = Object.keys(assets);
-        const outputPath = `__webpack_public_path__ + ${JSON.stringify(files[0])}`;
+        const outputPath = `__webpack_public_path__ + ${JSON.stringify(files[0] + '?hash=' + compilation.hash)} `;
         
         callback(null, `module.exports = ${outputPath};`);
     });
