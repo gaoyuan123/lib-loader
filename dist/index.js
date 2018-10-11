@@ -22,7 +22,7 @@ module.exports.pitch = function pitch(request) {
     validateOptions(schema, query, 'lib Loader');
 
     const callback = this.async();
-    if(buildFiles[request]){
+    if(buildFiles[request] && this.target != 'web'){
         const outputPath = `__webpack_public_path__ + '${buildFiles[request]}'`;
         return callback(null, `module.exports = ${outputPath};`);
     }
@@ -35,7 +35,7 @@ module.exports.pitch = function pitch(request) {
         target: 'web',
     });
     Object.assign(childOptions.output ,{
-        filename: '[name].[hash].js',
+        filename: this._compilation.outputOptions.filename || '[name].js',
         library : '[name]',
     })
 
