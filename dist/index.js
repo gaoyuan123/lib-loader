@@ -22,13 +22,15 @@ module.exports.pitch = function pitch(request) {
     validateOptions(schema, query, 'lib Loader');
 
     const callback = this.async();
-    if(buildFiles[request] && this.target != 'web'){
-        const outputPath = `__webpack_public_path__ + '${buildFiles[request]}'`;
-        return callback(null, `module.exports = ${outputPath};`);
-    }
     
     const targetName = Object.keys(query)[0]
     const entryName = path.basename(this.resourcePath,'.js')
+
+    if(this.target != 'web'){
+        const outputPath = `__webpack_public_path__ + '${buildFiles[request]||entryName}'`;
+        return callback(null, `module.exports = ${outputPath};`);
+    }
+
     const childCompiler = this._compilation.createChildCompiler(`lib-loader ${request}`, {});
     const childOptions = childCompiler.options;
     Object.assign(childOptions,{
