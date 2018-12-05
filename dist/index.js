@@ -27,7 +27,7 @@ module.exports.pitch = function pitch(request) {
     const entryName = path.basename(this.resourcePath,'.js')
 
     if(this.target != 'web'){
-        const outputPath = `__webpack_public_path__ + '${buildFiles[request]||entryName}'`;
+        const outputPath = `__webpack_public_path__ + ${JSON.stringify(buildFiles[request]||(entryName + '.js'))}`;
         return callback(null, `module.exports = ${outputPath};`);
     }
 
