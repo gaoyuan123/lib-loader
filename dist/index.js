@@ -27,7 +27,7 @@ module.exports.pitch = function pitch(request) {
     const entryName = path.basename(this.resourcePath,'.js')
 
     if(this.target != 'web'){
-        const outputPath = `__webpack_public_path__ + ${JSON.stringify(buildFiles[request]||(entryName + '.js'))}`;
+        const outputPath = `__webpack_public_path__ + ${JSON.stringify(buildFiles[this.request]||(entryName + '.js'))}`;
         return callback(null, `module.exports = ${outputPath};`);
     }
 
@@ -66,7 +66,7 @@ module.exports.pitch = function pitch(request) {
         const assets = compilation.assets;
         const files = Object.keys(assets);
         const outputPath = `__webpack_public_path__ + '${files[0]}'`;
-        buildFiles[request] = files[0];
+        buildFiles[this.request] = files[0];
         callback(null, `module.exports = ${outputPath};`);
     });
 }
