@@ -1,6 +1,6 @@
 {
   "name": "library-loader",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "a webpack loader to package a lib",
   "main": "dist/index.js",
   "author": "showgao <gaoyuanzlz@qq.com>",

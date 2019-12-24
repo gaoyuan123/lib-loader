@@ -13,7 +13,7 @@ const schema = require('./options.json');
 
 const buildFiles = {}
 
-module.exports = function libLoader() {};
+module.exports = function libLoader() { };
 
 module.exports.pitch = function pitch(request) {
     if (!this.emitFile)
@@ -22,46 +22,42 @@ module.exports.pitch = function pitch(request) {
     validateOptions(schema, query, 'lib Loader');
 
     const callback = this.async();
-    
-    const targetName = Object.keys(query)[0]
-    const entryName = path.basename(this.resourcePath,'.js')
 
-    if(this.target != 'web'){
-        const outputPath = `__webpack_public_path__ + ${JSON.stringify(buildFiles[this.request]||(entryName + '.js'))}`;
+    const { library, libraryExport = 'default', libraryTarget = 'umd2' } = query
+    const entryName = path.basename(this.resourcePath, '.js')
+
+    if (this.target != 'web') {
+        const outputPath = `__webpack_public_path__ + ${JSON.stringify(buildFiles[this.request] || (entryName + '.js'))}`;
         return callback(null, `module.exports = ${outputPath};`);
     }
 
     const childCompiler = this._compilation.createChildCompiler(`lib-loader ${request}`, {});
+
     const childOptions = childCompiler.options;
-    Object.assign(childOptions,{
+    Object.assign(childOptions, {
         target: 'web',
     });
-    Object.assign(childOptions.output ,{
-        filename: this._compilation.outputOptions.filename || '[name].js',
-        library: targetName,
-        libraryTarget: 'umd2'
-    })
 
     childCompiler.context = this.context;
     childCompiler.apply(
-      //new NodeTemplatePlugin(),
-      //new NodeTargetPlugin(),
-      new LibraryTemplatePlugin(targetName, 'umd2'),
-      new SingleEntryPlugin(this.context, this.resourcePath,entryName),
-      new LoaderTargetPlugin('web')
+        //new NodeTemplatePlugin(),
+        //new NodeTargetPlugin(),
+        new LibraryTemplatePlugin(library, libraryTarget, false, '', libraryExport),
+        new SingleEntryPlugin(this.context, this.resourcePath, entryName),
+        new LoaderTargetPlugin('web')
     );
 
     childCompiler.runAsChild((err, entries, compilation) => {
         if (err) return callback(err);
-  
+
         if (compilation.errors.length > 0) {
-          return callback(compilation.errors[0]);
+            return callback(compilation.errors[0]);
         }
         compilation.fileDependencies.forEach((dep) => {
-          this.addDependency(dep);
+            this.addDependency(dep);
         }, this);
         compilation.contextDependencies.forEach((dep) => {
-          this.addContextDependency(dep);
+            this.addContextDependency(dep);
         }, this);
 
         const assets = compilation.assets;
