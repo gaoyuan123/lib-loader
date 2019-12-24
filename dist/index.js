@@ -38,16 +38,17 @@ module.exports.pitch = function pitch(request) {
     });
     Object.assign(childOptions.output ,{
         filename: this._compilation.outputOptions.filename || '[name].js',
-        library : '[name]',
+        library : targetName,
+        libraryTarget: "umd"
     })
 
     childCompiler.context = this.context;
     childCompiler.apply(
-      new NodeTemplatePlugin(),
-      new NodeTargetPlugin(),
-      new LibraryTemplatePlugin(targetName, 'var'),
+      //new NodeTemplatePlugin(),
+      //new NodeTargetPlugin(),
+      //new LibraryTemplatePlugin(targetName, 'var'),
       new SingleEntryPlugin(this.context, this.resourcePath,entryName),
-      new LoaderTargetPlugin('web')
+      //new LoaderTargetPlugin('web')
     );
 
     childCompiler.runAsChild((err, entries, compilation) => {
