@@ -23,7 +23,7 @@ module.exports.pitch = function pitch(request) {
 
     const callback = this.async();
 
-    const { library, libraryExport = 'default', libraryTarget = 'umd2' } = query
+    const { library, libraryExport, libraryTarget = 'umd2' } = query
     const entryName = query.entryName || path.basename(this.resourcePath, '.js')
 
     if (this.target != 'web') {
