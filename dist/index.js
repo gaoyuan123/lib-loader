@@ -23,8 +23,8 @@ module.exports.pitch = function pitch(request) {
 
     const callback = this.async();
 
-    const { library, libraryExport, libraryTarget = 'umd2' } = query
-    const entryName = path.basename(this.resourcePath, '.js')
+    const { library, libraryExport = 'default', libraryTarget = 'umd2' } = query
+    const entryName = query.entryName || path.basename(this.resourcePath, '.js')
 
     if (this.target != 'web') {
         const outputPath = `__webpack_public_path__ + ${JSON.stringify(buildFiles[this.request] || (entryName + '.js'))}`;
