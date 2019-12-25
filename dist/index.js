@@ -31,7 +31,9 @@ module.exports.pitch = function pitch(request) {
         return callback(null, `module.exports = ${outputPath};`);
     }
 
-    const childCompiler = this._compilation.createChildCompiler(`lib-loader ${request}`, {});
+    const childCompiler = this._compilation.createChildCompiler(`lib-loader ${request}`, {
+        filename: this._compilation.outputOptions.filename || '[name].js',
+    });
 
     const childOptions = childCompiler.options;
     Object.assign(childOptions, {
