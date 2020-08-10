@@ -23,7 +23,7 @@ module.exports.pitch = function pitch(request) {
 
     const callback = this.async();
 
-    const { library, libraryExport, libraryTarget = 'umd2' } = query
+    const { library, libraryExport, libraryTarget = 'umd2', filename } = query
     const entryName = query.entryName || path.basename(this.resourcePath, '.js')
 
     if (this.target != 'web') {
@@ -32,7 +32,7 @@ module.exports.pitch = function pitch(request) {
     }
 
     const childCompiler = this._compilation.createChildCompiler(`lib-loader ${request}`, {
-        filename: this._compilation.outputOptions.filename || '[name].js',
+        filename: filename || this._compilation.outputOptions.filename || '[name].js',
     });
 
     const childOptions = childCompiler.options;
